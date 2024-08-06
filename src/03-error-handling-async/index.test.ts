@@ -21,7 +21,8 @@ describe('error handling functions', () => {
     });
 
     it('throws an error with a default message if none is provided', () => {
-      expect(() => throwError()).toThrow('Oops!');
+      const defaultMessage = 'Oops!';
+      expect(() => throwError()).toThrow(defaultMessage);
     });
   });
 
@@ -43,9 +44,8 @@ describe('error handling functions', () => {
     });
 
     it('rejects with a custom error with the correct message', async () => {
-      await expect(rejectCustomError()).rejects.toThrow(
-        'This is my awesome custom error!',
-      );
+      const defaultMessage = 'This is my awesome custom error!';
+      await expect(rejectCustomError()).rejects.toThrow(defaultMessage);
     });
   });
 });
