@@ -1,17 +1,55 @@
-// Uncomment the code below and write your tests
-/* import {  simpleCalculator, Action } from './index';
+import { simpleCalculator, Action } from './index';
 
-const testCases = [
-    { a: 1, b: 2, action: Action.Add, expected: 3 },
-    { a: 2, b: 2, action: Action.Add, expected: 4 },
-    { a: 3, b: 2, action: Action.Add, expected: 5 },
-    // continue cases for other actions    
-]; */
+const validTestCases = [
+  { a: 1, b: 2, action: Action.Add, expected: 3 },
+  { a: 2, b: 2, action: Action.Subtract, expected: 0 },
+  { a: 3, b: 2, action: Action.Multiply, expected: 6 },
+  { a: 6, b: 2, action: Action.Divide, expected: 3 },
+  { a: 6, b: 0, action: Action.Divide, expected: Infinity },
+  { a: 0, b: 6, action: Action.Divide, expected: 0 },
+  { a: 0, b: 6, action: Action.Multiply, expected: 0 },
+  { a: 4, b: 3, action: Action.Exponentiate, expected: 64 },
+  { a: 4, b: 0, action: Action.Exponentiate, expected: 1 },
+  { a: 0, b: 0, action: Action.Exponentiate, expected: 1 },
+  { a: Math.cos(0), b: 1, action: Action.Add, expected: 2 },
+  // Add more cases as needed
+];
 
-describe('simpleCalculator', () => {
-  // This test case is just to run this test suite, remove it when you write your own tests
-  test('should blah-blah', () => {
-    expect(true).toBe(true);
+const invalidTestCases = [
+  { a: 1, b: 2, action: 'invalid', expected: null },
+  { a: '1', b: '2', action: Action.Add, expected: null },
+  { a: null, b: 2, action: Action.Add, expected: null },
+  { a: 1, b: undefined, action: Action.Add, expected: null },
+  { a: 1, b: '2', action: undefined, expected: null },
+  // Add more cases as needed
+];
+
+describe('SimpleCalculator Tests', () => {
+  function testFunction(
+    testCase:
+      | (typeof validTestCases)[number]
+      | (typeof invalidTestCases)[number],
+  ) {
+    test(`expect ${testCase.expected} for ${testCase.a} ${testCase.action} ${testCase.b}`, () => {
+      expect(
+        simpleCalculator({
+          a: testCase.a,
+          b: testCase.b,
+          action: testCase.action,
+        }),
+      ).toBe(testCase.expected);
+    });
+  }
+
+  describe('Valid Test Cases', () => {
+    validTestCases.forEach((testCase) => {
+      testFunction(testCase);
+    });
   });
-  // Consider to use Jest table tests API to test all cases above
+
+  describe('Invalid Test Cases', () => {
+    invalidTestCases.forEach((testCase) => {
+      testFunction(testCase);
+    });
+  });
 });
