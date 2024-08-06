@@ -1,6 +1,20 @@
 import { simpleCalculator, Action } from './index';
 
-const validTestCases = [
+interface ValidTestCase {
+  a: number;
+  b: number;
+  action: Action;
+  expected: number;
+}
+
+interface InvalidTestCase {
+  a: any;
+  b: any;
+  action: any;
+  expected: null;
+}
+
+const validTestCases: ValidTestCase[] = [
   { a: 1, b: 2, action: Action.Add, expected: 3 },
   { a: 2, b: 2, action: Action.Subtract, expected: 0 },
   { a: 3, b: 2, action: Action.Multiply, expected: 6 },
@@ -15,7 +29,7 @@ const validTestCases = [
   // Add more cases as needed
 ];
 
-const invalidTestCases = [
+const invalidTestCases: InvalidTestCase[] = [
   { a: 1, b: 2, action: 'invalid', expected: null },
   { a: '1', b: '2', action: Action.Add, expected: null },
   { a: null, b: 2, action: Action.Add, expected: null },
@@ -25,31 +39,20 @@ const invalidTestCases = [
 ];
 
 describe('SimpleCalculator Tests', () => {
-  function testFunction(
-    testCase:
-      | (typeof validTestCases)[number]
-      | (typeof invalidTestCases)[number],
-  ) {
-    test(`expect ${testCase.expected} for ${testCase.a} ${testCase.action} ${testCase.b}`, () => {
-      expect(
-        simpleCalculator({
-          a: testCase.a,
-          b: testCase.b,
-          action: testCase.action,
-        }),
-      ).toBe(testCase.expected);
-    });
+  function testFunction(testCases: InvalidTestCase[] | ValidTestCase[]) {
+    test.each(testCases.map(Object.values))(
+      'expect %p when %p %p %p is performed',
+      (a, b, action, expected) => {
+        expect(simpleCalculator({ a, b, action })).toBe(expected);
+      },
+    );
   }
 
   describe('Valid Test Cases', () => {
-    validTestCases.forEach((testCase) => {
-      testFunction(testCase);
-    });
+    testFunction(validTestCases);
   });
 
   describe('Invalid Test Cases', () => {
-    invalidTestCases.forEach((testCase) => {
-      testFunction(testCase);
-    });
+    testFunction(invalidTestCases);
   });
 });
