@@ -43,7 +43,9 @@ describe('SimpleCalculator Tests', () => {
     test.each(testCases.map(Object.values))(
       'expect %p when %p %p %p is performed',
       (a, b, action, expected) => {
-        expect(simpleCalculator({ a, b, action })).toBe(expected);
+        const input = { a, b, action };
+        const result = simpleCalculator(input);
+        expect(result).toBe(expected);
       },
     );
   }
