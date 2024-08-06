@@ -1,32 +1,50 @@
-// Uncomment the code below and write your tests
 import { simpleCalculator, Action } from './index';
 
 describe('simpleCalculator tests', () => {
   test('should add two numbers', () => {
-    expect(simpleCalculator({ a: 1, b: 2, action: Action.Add })).toBe(3);
+    const input = { a: 1, b: 2, action: Action.Add };
+    const expected = 3;
+    const result = simpleCalculator(input);
+    expect(result).toBe(expected);
   });
 
   test('should subtract two numbers', () => {
-    expect(simpleCalculator({ a: 2, b: 2, action: Action.Subtract })).toBe(0);
+    const input = { a: 2, b: 2, action: Action.Subtract };
+    const expected = 0;
+    const result = simpleCalculator(input);
+    expect(result).toBe(expected);
   });
 
   test('should multiply two numbers', () => {
-    expect(simpleCalculator({ a: 2, b: 2, action: Action.Multiply })).toBe(4);
+    const input = { a: 2, b: 2, action: Action.Multiply };
+    const expected = 4;
+    const result = simpleCalculator(input);
+    expect(result).toBe(expected);
   });
 
   test('should divide two numbers', () => {
-    expect(simpleCalculator({ a: 64, b: 4, action: Action.Divide })).toBe(16);
+    const input = { a: 64, b: 4, action: Action.Divide };
+    const expected = 16;
+    const result = simpleCalculator(input);
+    expect(result).toBe(expected);
   });
 
   test('should exponentiate two numbers', () => {
-    expect(simpleCalculator({ a: 2, b: 3, action: Action.Exponentiate })).toBe(8);
+    const input = { a: 2, b: 3, action: Action.Exponentiate };
+    const expected = 8;
+    const result = simpleCalculator(input);
+    expect(result).toBe(expected);
   });
 
   test('should return null for invalid action', () => {
-    expect(simpleCalculator({ a: 1, b: 2, action: 'invalid' })).toBeNull();
+    const input = { a: 1, b: 2, action: 'invalid' };
+    const result = simpleCalculator(input);
+    expect(result).toBeNull();
   });
 
   test('should return null for invalid arguments', () => {
-    expect(simpleCalculator({ a: '1', b: '2', action: Action.Add })).toBeNull();
+    const input = { a: '1', b: '2', action: Action.Add };
+    const result = simpleCalculator(input);
+    expect(result).toBeNull();
   });
 });
